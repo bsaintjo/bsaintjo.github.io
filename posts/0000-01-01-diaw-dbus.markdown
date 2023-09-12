@@ -1,0 +1,30 @@
+---
+title: DNS In A Weekend Extras (Rust + D-Bus)
+---
+
+This post explores taking the DNS resolver developed in DNS In A Weekend and running it through the D-Bus interface. The goal is to drop it in place of `systemd-resolved` and get it to work.
+
+## Proof of concept?
+
+Use trust_dns_resolver + zbus first
+
+## D-Bus, zbus, and systemd-resolved
+
+<https://github.com/dbus2/zbus/tree/main>
+<https://www.freedesktop.org/software/systemd/man/org.freedesktop.resolve1.html>
+
+## Creating interface from XML file
+
+```bash
+# Generate XML file with busctl
+busctl --system --xml-interface introspect   org.freedesktop.resolve1   /org/freedesktop/resolve1 >resolve.xml
+
+# Convert to Rust code
+zbus-xmlgen resolve.xml
+```
+
+## Implementing resolver interface
+
+## Switch to our resolver
+
+systemd-resolver uses 127.0.0.1 port 53
